@@ -20,7 +20,14 @@
                 @endforeach
             </select>
         </div>
-        <button type="submit" class="btn btn-success">Place Order</button>
+        {{-- <button type="submit" class="btn btn-success">Place Order</button> --}}
+        <form action="{{ route('checkout') }}" method="POST">
+        @csrf
+        {{-- @foreach ($cartItems as $item)
+            <input type="hidden" name="items[]" value="{{ $item->id }}">
+        @endforeach --}}
+            <button type="submit" class="btn btn-success">Place Order</button>
+        </form>
         <a href="{{ route('cart.view') }}" class="btn btn-secondary">Back to cart</a>
     </form>
 </div>

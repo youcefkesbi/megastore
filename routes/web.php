@@ -13,6 +13,7 @@ use App\Http\Controllers\ShopController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\StripeController;
+use App\Http\Controllers\CheckoutController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -41,5 +42,7 @@ Route::get('/shop', [ShopController::class, 'index'])->name('shop');
 
 Route::post('/cart/add/{product}', [CartController::class, 'addToCart'])->name('cart.add');
 Route::get('/cart', [CartController::class, 'viewCart'])->name('cart.view');
+
+Route::post('/checkout', [CheckoutController::class, 'checkout'])->name('checkout');
 
 Route::get('/pay', [StripeController::class, 'stripe'])->name('stripe');

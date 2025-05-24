@@ -26,7 +26,6 @@ class CartController extends Controller
         session()->put('cart', $cart);
         return redirect()->route('cart.view')->with('Success', 'Product added to cart successfully!');
     }
-
     public function viewCart()
     {
         return view('cart');
