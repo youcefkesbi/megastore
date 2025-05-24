@@ -33,7 +33,7 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
     Route::resource('brands', BrandController::class);
     Route::resource('categories', CategoryController::class);
     Route::resource('products', ProductController::class);
-    Route::resource('dashboard', DashboardController::class);
+    Route::get('/dashboard/index', [DashboardController::class, 'index'])->name('dashboard.index');
     Route::resource('orders', OrderController::class);
 });
 
