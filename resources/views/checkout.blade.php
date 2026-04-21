@@ -1,35 +1,24 @@
 @extends('layouts.app')
 @section('content')
 
-<div class="container">
-    <h2>Checkout</h2>
+<div class="container mt-4">
+    <div class="card border-0 shadow-sm">
+        <div class="card-body p-4">
+            <h2 class="h4 mb-3">Checkout</h2>
+            <p class="text-muted mb-4">
+                Review your cart and place the order. Payment integration can be completed from the Stripe page.
+            </p>
 
-    <form action="" method="POST">
-        @csrf
-
-        <div class="mb-3">
-            <label for="shipping_address" class="form-label">Shipping Address:</label>
-            <input type="text" class="form-control" id="shipping_address" name="shipping_address" required>
+            <div class="d-flex gap-2">
+                <form action="{{ route('checkout') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="btn btn-dark">Place Order</button>
+                </form>
+                <a href="{{ route('cart.view') }}" class="btn btn-outline-secondary">Back to Cart</a>
+                <a href="{{ route('stripe') }}" class="btn btn-outline-primary">Pay with Stripe</a>
+            </div>
         </div>
-
-        <div class="mb-3">
-            <label for="payment_method_id" class="form_label">Select Payment Method:</label>
-            <select class="form-control" id="payment_method_id" name="payment_method_id" required>
-                @foreach ($paymentMethods as $method)
-                    <option value="{{ $method->id }}">{{ $method->name }}</option>
-                @endforeach
-            </select>
-        </div>
-        {{-- <button type="submit" class="btn btn-success">Place Order</button> --}}
-        <form action="{{ route('checkout') }}" method="POST">
-        @csrf
-        {{-- @foreach ($cartItems as $item)
-            <input type="hidden" name="items[]" value="{{ $item->id }}">
-        @endforeach --}}
-            <button type="submit" class="btn btn-success">Place Order</button>
-        </form>
-        <a href="{{ route('cart.view') }}" class="btn btn-secondary">Back to cart</a>
-    </form>
+    </div>
 </div>
 
 @endsection

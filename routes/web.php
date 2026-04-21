@@ -14,6 +14,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\StripeController;
 use App\Http\Controllers\CheckoutController;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     return view('welcome');
@@ -25,6 +26,10 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/dashboard', function () {
+        if (Auth::user()?->role === 'admin') {
+            return redirect()->route('dashboard.index');
+        }
+
         return view('dashboard');
     })->name('dashboard');
 });
@@ -42,7 +47,10 @@ Route::get('/shop', [ShopController::class, 'index'])->name('shop');
 
 Route::post('/cart/add/{product}', [CartController::class, 'addToCart'])->name('cart.add');
 Route::get('/cart', [CartController::class, 'viewCart'])->name('cart.view');
+Route::post('/cart/update/{product}', [CartController::class, 'updateCart'])->name('cart.update');
+Route::delete('/cart/remove/{product}', [CartController::class, 'removeFromCart'])->name('cart.remove');
 
 Route::post('/checkout', [CheckoutController::class, 'checkout'])->name('checkout');
 
 Route::get('/pay', [StripeController::class, 'stripe'])->name('stripe');
+Route::post('/pay', [StripeController::class, 'stripePost'])->name('stripe.post');

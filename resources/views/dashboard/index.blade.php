@@ -2,61 +2,61 @@
 @section('content')
 
 <div class="container">
-    <h2>Dashboard</h2>
-    <div class="row">
+    <h2 class="mb-3">Dashboard</h2>
+    <div class="row g-3">
 
         <div class="col-sm-4">
-                <div class="card bg-primary text-white">
+                <div class="card border-0">
                     <div class="card-body">
-                        <h5>Total Orders</h5>
+                        <h6 class="text-secondary">Total Orders</h6>
                         <h3>{{ $ordersCount }}</h3>
                     </div>
                 </div>
         </div>
 
         <div class="col-sm-4">
-            <div class="card bg-success text-white">
+            <div class="card border-0">
                 <div class="card-body">
-                    <h5>Total Products</h5>
+                    <h6 class="text-secondary">Total Products</h6>
                     <h3>{{ $productsCount }}</h3>
                 </div>
             </div>
         </div>
 
         <div class="col-sm-4">
-            <div class="card bg-warning text-white">
+            <div class="card border-0">
                 <div class="card-body">
-                    <h5>Total Users</h5>
+                    <h6 class="text-secondary">Total Users</h6>
                     <h3>{{ $usersCount }}</h3>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="row mt-4">
+    <div class="row g-3 mt-1">
 
         <div class="col-sm-6">
-            <div class="card">
+            <div class="card border-0">
                 <div class="card-body">
-                    <h5 class="text-center">Orders Chart</h5>
+                    <h6 class="text-center text-secondary">Orders</h6>
                     <canvas id="ordersChart"></canvas>
                 </div>
             </div>
         </div>
 
         <div class="col-sm-6">
-            <div class="card">
+            <div class="card border-0">
                 <div class="card-body">
-                    <h5 class="text-center">Products Chart</h5>
+                    <h6 class="text-center text-secondary">Products</h6>
                     <canvas id="productsChart"></canvas>
                 </div>
             </div>
         </div>
 
-        <div class="col-sm-6">
-            <div class="card">
+        <div class="col-sm-6 col-lg-12">
+            <div class="card border-0">
                 <div class="card-body">
-                    <h5 class="text-center">Users Chart</h5>
+                    <h6 class="text-center text-secondary">Users</h6>
                     <canvas id="usersChart"></canvas>
                 </div>
             </div>

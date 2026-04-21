@@ -12,7 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->string('url')->nullable()->change();
+            if (Schema::hasColumn('products', 'url')) {
+                $table->string('url')->nullable()->change();
+            }
+
+            $table->foreign('category_id')->references('id')->on('categories')->cascadeOnDelete();
+            $table->foreign('brand_id')->references('id')->on('brands')->nullOnDelete();
         });
     }
 
@@ -22,7 +27,12 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->string('url')->nullable(false)->change();
+            $table->dropForeign(['category_id']);
+            $table->dropForeign(['brand_id']);
+
+            if (Schema::hasColumn('products', 'url')) {
+                $table->string('url')->nullable(false)->change();
+            }
         });
     }
 };

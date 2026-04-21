@@ -1,47 +1,39 @@
 @extends('layouts.dashboard')
 @section('content')
 
-<h2>Orders Management</h2>
+<h1>Orders</h1>
 
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>Order ID</th>
-            <th>User</th>
-            <th>Total Price</th>
-            <th>Status</th>
-            <th>Update</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach($orders as $order)
-        <tr>
-            <td>{{ $order->id }}</td>
-            <td>{{ $order->user->name }}</td>
-            <td>${{ number_format($order->total_price, 2) }}</td>
-            <td>
-                <form action="">
-                    @csrf
-                    <select name="status" class="form-control" onchange="this.form.submit()">
-                        <option value="pending" {{ $order->status == 'pending' ? 'selected' : '' }}>Pending</option>
-                        <option value="completed" {{ $order->status == 'completed' ? 'selected' : '' }}>Completed</option>
-                        <option value="canceled" {{ $order->status == 'canceled' ? 'selected' : '' }}>Canceled</option>
-                        <option value="processing" {{ $order->status == 'processing' ? 'selected' : '' }}>Processing</option>
-                    </select>
-                </form>
-            </td>
-            <td>{{ $order->update_at->format('Y-m-d H:i') }}</td>
-            <td>
-                <form action="">
-                    @csrf
-                    <button type="submit" class="btn btn-danger">Update</button>
-                </form>
-            </td>
-        </tr>
-        @endforeach
-    </tbody>
-
-</table>
+<div class="card">
+    <div class="card-body p-0">
+        <table class="table table-hover mb-0">
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>User</th>
+                    <th>Total</th>
+                    <th>Status</th>
+                    <th>Updated</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse($orders as $order)
+                <tr>
+                    <td>#{{ $order->id }}</td>
+                    <td>{{ $order->user->name ?? 'Unknown user' }}</td>
+                    <td>${{ number_format($order->total_price, 2) }}</td>
+                    <td>
+                        <span class="badge text-bg-light border text-capitalize">{{ $order->status }}</span>
+                    </td>
+                    <td>{{ $order->updated_at?->format('Y-m-d H:i') ?? '-' }}</td>
+                </tr>
+                @empty
+                <tr>
+                    <td colspan="5" class="text-center text-muted py-4">No orders found.</td>
+                </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
+</div>
 
 @endsection

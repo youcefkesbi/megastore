@@ -15,9 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->string('slug')->unique();
-            $table->foreignId('category_id')->constrained()->onDelete('cascade');
-            $table->foreignId('brand_id')->nullable()->onDelete('set null');
-            $table->decimal('price');
+            // FKs are added in a later migration because categories/brands are
+            // created after this migration in timestamp order.
+            $table->foreignId('category_id');
+            $table->foreignId('brand_id')->nullable();
+            $table->decimal('price', 10, 2);
             $table->integer('stock')->default(0);
             $table->string('image')->nullable();
             $table->text('description')->nullable();

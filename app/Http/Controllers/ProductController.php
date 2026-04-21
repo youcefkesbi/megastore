@@ -6,6 +6,7 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
@@ -18,8 +19,8 @@ class ProductController extends Controller
 
     public function create()
     {
-        $brands = Brand::all();
-        $categories = Category::all();
+        $brands = Brand::orderBy('name')->get();
+        $categories = Category::orderBy('name')->get();
         return view('dashboard.products.create', compact('categories', 'brands'));
     }
 
@@ -37,8 +38,18 @@ class ProductController extends Controller
 
         $imagePath =$request->file('image') ? $request->file('image')->store('products', 'public') : null;
 
+        $baseSlug = Str::slug($request->name);
+        $slug = $baseSlug;
+        $counter = 1;
+
+        while (Product::where('slug', $slug)->exists()) {
+            $slug = $baseSlug.'-'.$counter;
+            $counter++;
+        }
+
         Product::create([
             'name' => $request->name,
+            'slug' => $slug,
             'category_id' => $request->category_id,
             'brand_id' => $request->brand_id,
             'price' => $request->price,
